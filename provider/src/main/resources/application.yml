@@ -1,9 +1,9 @@
-spring:
-  application:
-    name: provider
 server:
   port: 8081
 dubbo:
+  application:
+    name: provider
+    qos-enable: false
   protocol:
     name: dubbo
     port: 20880
