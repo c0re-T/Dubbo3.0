@@ -3,3 +3,9 @@ spring:
     name: provider
 server:
   port: 8081
+dubbo:
+  protocol:
+    name: dubbo
+    port: 20880
+  registry:
+    address: zookeeper://127.0.0.1:2181
