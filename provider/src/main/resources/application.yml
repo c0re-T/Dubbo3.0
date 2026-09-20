@@ -4,8 +4,9 @@ dubbo:
   application:
     name: provider
     qos-enable: false
+    register-mode: instance
   protocol:
-    name: dubbo
+    name: tri
     port: 20880
   registry:
     address: zookeeper://127.0.0.1:2181
