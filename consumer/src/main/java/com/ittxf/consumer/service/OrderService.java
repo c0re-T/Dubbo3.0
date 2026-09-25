@@ -19,7 +19,23 @@ public class OrderService {
     public String getOrder() {
         // UNARY
         // return "Order Service:" + userService.getUser();
-        userService.sayHelloServerStream("dubbo", new StreamObserver<String>() {
+        /*userService.sayHelloServerStream("dubbo", new StreamObserver<String>() {
+            @Override
+            public void onNext(String data) {
+                System.out.println("接受到结果：" + data);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        });*/
+        StreamObserver<String> stringStreamObserver = userService.sayHelloClientStream(new StreamObserver<String>() {
             @Override
             public void onNext(String data) {
                 System.out.println("接受到结果：" + data);
@@ -35,6 +51,12 @@ public class OrderService {
 
             }
         });
+
+        stringStreamObserver.onNext("1");
+        stringStreamObserver.onNext("2");
+        stringStreamObserver.onNext("3");
+        stringStreamObserver.onCompleted();
+
         return "Order Service:" + userService.getUser();
     }
 }

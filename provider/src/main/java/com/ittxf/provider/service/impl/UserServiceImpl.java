@@ -22,4 +22,31 @@ public class UserServiceImpl implements UserService {
         // 完成处理
         response.onCompleted();
     }
+
+    @Override
+    public StreamObserver<String> sayHelloClientStream(StreamObserver<String> response) {
+        return new StreamObserver<String>() {
+            @Override
+            public void onNext(String data) {
+                // 服务端接受数据
+                System.out.println("接受到结果：" + data);
+
+                // 服务端处理数据；此处不能调用 response.onCompleted()，否则响应流提前结束
+                response.onNext("响应结果:" + data);
+                response.onNext("hello:" + data);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                System.out.println("服务端处理错误：" + throwable.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("服务端处理完成");
+                // 请求流结束后再统一完成响应流
+                response.onCompleted();
+            }
+        };
+    }
 }
